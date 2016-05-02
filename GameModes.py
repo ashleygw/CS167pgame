@@ -1,7 +1,8 @@
 from Pole import *
 from Box import *
+
 def Title(pg,width,height):
-    
+    textSize(20)
     pg.beginDraw()
     pg.background(102)
     pg.stroke(255)
@@ -19,26 +20,29 @@ def Title(pg,width,height):
     for x in range(10):
         for y in range(10):
             image(pg, x*80,y*60) 
-    #stroke(0)
-    #fill(255)
-    #rect(100,500, 200, 60, 20)
+    if mouseX>100 and mouseX<300 and mouseY>500 and mouseY<560:
+        stroke(255)
+        fill(0)
+        rect(100,500, 200, 60, 20)
+        stroke(0)
+        fill(255)
+        text("PLAY THE GAME",122,535)
+        
+    else:
+        stroke(0)
+        fill(255)
+        rect(100,500, 200, 60, 20)
+        stroke(255)
+        fill(0)
+        text("PLAY THE GAME",122,535)
+    
     
  
-def PlayMode(score):
-     for i in range(len(Balls)):
-         for j in range(i+1,len(Balls)):
-             if intersecting(Balls[i],Balls[j]):
-                 Balls[i].setIntersecting(True)
-                 Balls[j].setIntersecting(True)
-             
-     
-     # Current score
-     textSize(32)
-     fill(0)
-     text(score, 10,40)
-     # If currtime exceeds endtime, turn off playmode
-     playmode = True
-     return playmode
+def Play(score):
+     """
+     Put Game here.
+     """
+     background(0)
 
 def GameOver(score):
      # Game over screen. 

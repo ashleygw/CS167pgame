@@ -1,4 +1,5 @@
 from Vector import *
+#This only works for the title screen, don't try to use this in the main game. Balls will not behave.
 class Ball:
     def __init__(self, pos, vel, radius=10):
         self.x = pos.X()
@@ -43,6 +44,11 @@ class Ball:
         yblo = floor(self.y/60)   
         temp = p0 - p1
         n = Vector(-temp.Y(),temp.X())   
+        if n.le() == 0:
+            #No colliding holy shit
+            self.x += self.vx
+            self.y += self.vy
+            return
         n = n*(1/n.le())
         v = Vector(self.vx,self.vy) 
         d = self.R
@@ -93,7 +99,7 @@ class Ball:
         
         
         
-        
+        #VVVVVVVVV SHITTY CODE DON"T UNCOMMENT ANY OF THIS VVVVVVV
         # Checks for Line interaction   
         #TF LOCAL COORDS
         #NEED FOR LOOP CHECKING FOR MORE THAN JUST ONE INTERACTION

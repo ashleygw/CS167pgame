@@ -43,6 +43,7 @@ def Play(score):
      Put Game here.
      """
      background(0)
+     
 
 def GameOver(score):
      # Game over screen. 

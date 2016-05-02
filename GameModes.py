@@ -6,10 +6,10 @@ def Title(pg,width,height):
     pg.background(102)
     pg.stroke(255)
     pg.strokeWeight(5)
-    pg.line(mouseX/10, mouseY/10, 40, 30)
+    pg.line(mouseX/10, mouseY/10, 80 - mouseX/10, 60 - mouseY/10)
     pg.stroke(0)
-    pg.ellipse(mouseX/10,mouseY/10,5,5)
-    pg.ellipse(40,30,5,5)
+    #pg.ellipse(mouseX/10,mouseY/10,1,1)
+    #pg.ellipse(40,30,5,5)
     #dx = mouseX/10-40
     #dy = mouseY/10 - 30
     #if dy != 0:

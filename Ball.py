@@ -36,7 +36,7 @@ class Ball:
             
     
         p0 = Vector(mouseX/10, mouseY/10)
-        p1 = Vector(40,30)
+        p1 = Vector(80 - mouseX/10, 60 - mouseY/10)
         be = Vector(self.x%80 + self.vx, self.y%60+ self.vy)
         bs = Vector(self.x%80, self.y%60)
         xblo = floor(self.x/80)

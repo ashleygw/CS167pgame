@@ -1,6 +1,5 @@
 from Pole import *
 from Box import *
-
 def Title(pg,width,height):
     textSize(20)
     
@@ -59,5 +58,6 @@ def GameOver(score): #Make this pretty
      text(score, 350,300)
      textSize(40)
      text("Good job you did it",230,400)
+
  
          

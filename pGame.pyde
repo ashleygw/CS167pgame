@@ -4,7 +4,7 @@ from Ball import *
 from Player import *
 
 def setup():
-    global mode, pg, Balls, counter, score, Boxes, player, speedo
+    global mode, pg, Balls, counter, score, Boxes, player, speedo, new_counter
     mode = 0
     pg = createGraphics(80,60) #P2D can be used here to make it run faster, it is less pretty though
     size(800,600) #P2D
@@ -13,10 +13,11 @@ def setup():
     score = 0
     Boxes = []
     player = Player(Vector(80*5,60*5))
-    speedo = 90 #Starting difficulty: 0 == easy, 80 == hardest, 100 == medium
+    speedo = 0 #Starting difficulty: 0 == easy, 80 == hardest, 100 == medium Needs work on pop expansion formula
+    new_counter = 5
     
 def draw():
-    global mode, pg, Balls, counter,score, Boxes, player,speedo
+    global mode, pg, Balls, counter,score, Boxes, player,speedo, new_counter
     if mode == 0:
         counter += 1
         Title(pg,width,height)
@@ -41,12 +42,24 @@ def draw():
            if intersect(player, b):
                mode = 2
         counter +=1
-        if speedo < 99:
-            if counter%(100-speedo) < 4:
-                fire() #CONSIDER DELETING THIS
-        else:
-            if random(0,1)>.95:
+        
+        #Difficulty creep, currently not really needed as it gets harder with box behavior. Could implement in difficulty select.
+        if score >=80:
+            if random(0,1) > .96:
                 fire()
+        elif score >=50:
+            if random(0,1) > .97:
+                fire()
+        elif score >= 30:
+            if random(0,1) > .97:
+                fire()
+        elif score >= 20:
+            if random(0,1)>.97:
+                fire()
+        else:
+            if random(0,1)>.97:
+                fire()
+                
     if mode == 2:
         GameOver(score)
         
@@ -56,16 +69,48 @@ def drop():
     
 def fire():
     #Generates boxes and throws them accross screen
-    global speedo
+    global speedo, score, Boxes
     speedo+=1
-    if round(random(0,3)) == 0.0:
-        Boxes.append(Box(Vector(-50,random(0,550)),Vector(5,0),random(20,40)))
-    if round(random(0,3)) == 1.0:
-        Boxes.append(Box(Vector(850,random(0,550)),Vector(-5,0),random(20,40)))
-    if round(random(0,3)) == 2.0:
-        Boxes.append(Box(Vector(random(0,750),-50),Vector(0,5),random(20,40)))        
-    if round(random(0,3)) == 3.0:
-        Boxes.append(Box(Vector(random(0,750),850),Vector(0,-5),random(20,40)))
+    var = floor(random(0,4))
+    if score >= 35:
+        if random(0,6) < 1:
+            if score >= 50:
+                print(50)
+                for b in Boxes:
+                    b.vel.setX(random(-3,3))
+                    b.vel.setY(random(-3,3))
+            else:
+                for b in Boxes:
+                    b.vel.setX(-b.vel.X())
+                    b.vel.setY(-b.vel.Y())     
+        if floor(var) == 0:
+            Boxes.append(Box(Vector(-50,random(0,550)),Vector(random(2,6)),random(20,40)))
+        if floor(var) == 1:
+            Boxes.append(Box(Vector(850,random(0,550)),Vector(random(-6,-2)),random(20,40)))
+        if floor(var) == 2:
+            Boxes.append(Box(Vector(random(0,750),-50),Vector(0,random(2,6)),random(20,40)))        
+        if floor(var) == 3:
+            Boxes.append(Box(Vector(random(0,750),850),Vector(0,random(-6,-2)),random(20,40)))
+    elif score>=20:
+        if floor(var) == 0:
+            Boxes.append(Box(Vector(-50,random(0,550)),Vector(random(2,6)),random(20,40)))
+        if floor(var) == 1:
+            Boxes.append(Box(Vector(850,random(0,550)),Vector(random(-6,-2)),random(20,40)))
+        if floor(var) == 2:
+            Boxes.append(Box(Vector(random(0,750),-50),Vector(0,random(2,6)),random(20,40)))        
+        if floor(var) == 3:
+            Boxes.append(Box(Vector(random(0,750),850),Vector(0,random(-6,-2)),random(20,40)))
+    else:
+        if floor(var) == 0:
+            Boxes.append(Box(Vector(-50,random(0,550)),Vector(5,0),random(20,40)))
+        if floor(var) == 1:
+            Boxes.append(Box(Vector(850,random(0,550)),Vector(-5,0),random(20,40)))
+        if floor(var) == 2:
+            Boxes.append(Box(Vector(random(0,750),-50),Vector(0,5),random(20,40)))        
+        if floor(var) == 3:
+            Boxes.append(Box(Vector(random(0,750),850),Vector(0,-5),random(20,40)))
+            
+    
         
 def mousePressed():
     #Used for button clicking

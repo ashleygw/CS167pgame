@@ -1,29 +1,22 @@
 class Box:
-    def __init__(self,loc, vel, type):
+    def __init__(self,loc, vel, Size):
         self.loc = loc
         self.vel = vel
         self.type = type
-        self.R = 20
+        self.R = Size
         self.c = color(random(255),random(255),random(255),255)
         pass
+        
     def update(self):
+        #Update box position, delete box if out of range.
         self.loc += self.vel
         if self.loc.X() < -100 or self.loc.X() > 950:
             return True
         if self.loc.Y() < -100 or self.loc.Y() > 900:
             return True
         
-      
-        
     def render(self):
-        """ Draw the ball for time t. """
+        #Draw the box
         noStroke()
         fill(self.c)
         rect(self.loc.X(),self.loc.Y(),self.R,self.R)
-        
-    # Intersection test.  Returns true if balls are intersecting, false otherwise
-    def intersecting(b1,b2):
-        if pow(b1.x-b2.x,2)+pow(b1.y-b2.y,2) <= pow(b1.R+b2.R,2):
-            return True;
-        return False
-         

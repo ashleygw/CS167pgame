@@ -3,24 +3,19 @@ class Player:
     def __init__(self,pos):
         self.x = pos.X()
         self.y = pos.Y()
-        #self.vy = vy
-        #self.ay = ay
         self.c = color(random(255),random(255),random(255))
-        #self.t=0
-        #self.dt=0.1
-        #self.bottom = bottom
          
     def render(self):
+        #Draws the player
         noStroke()
         fill(self.c)
-        #rect(width/2-100,height/2+self.y,width/2-50,height/2+self.bottom)
         rect(self.x,self.y,80,60)
         fill(color(random(255),random(255),random(255)))
         ellipse(self.x + 20, self.y +20,20,10)
         ellipse(self.x + 58, self.y +20,20,10)
         
     def update(self, dir):
-        #Fix this
+        #Controls player movement
         if dir == "up" and self.y >= 60:
             self.y -= 60
         if dir == "down" and self.y < 540:

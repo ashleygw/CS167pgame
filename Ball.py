@@ -21,8 +21,8 @@ class Ball:
         """ Responsible for time keeping. """
         # Update the velocity for gravity
         self.vy -= acceleration
-        # Check for wall bounces just changing the velocity resulted in many balls 
-        # Flying out when it got too fast, this is a little bit more efficient. 
+        
+        #Basic Wall interaction
         if self.x >= width - 10:
             self.x = width - 11
             self.vx = -self.vx*E
@@ -35,7 +35,7 @@ class Ball:
             self.y = 6
             self.vy =  abs(self.vy*E)
             
-    
+        #Line interaction
         p0 = Vector(mouseX/10, mouseY/10)
         p1 = Vector(80 - mouseX/10, 60 - mouseY/10)
         be = Vector(self.x%80 + self.vx, self.y%60+ self.vy)
@@ -44,33 +44,39 @@ class Ball:
         yblo = floor(self.y/60)   
         temp = p0 - p1
         n = Vector(-temp.Y(),temp.X())   
+        
+        #No collision case
         if n.le() == 0:
-            #No colliding holy shit
             self.x += self.vx
             self.y += self.vy
             return
+        
         n = n*(1/n.le())
         v = Vector(self.vx,self.vy) 
         d = self.R
-        #if n.dotp(bs) - n.dotp(p0) < 0:
+        
+        #if n.dotp(bs) - n.dotp(p0) < 0: #This is test code for preventing the ball from going through moving lines
             #d = -d
+            
         t = (n.dotp(p0) - n.dotp(bs)) / n.dotp(v) #+d?
         #t2 = (n.dotp(p0) - n.dotp(bs)) / n.dotp(v) #+d?
         bi = bs + v*t
         #bi2 = bs + v*t2    
+        
         q = bi - p0
         r = bi - p1
         d0 = (p0 - bi).le()
         d1 = (p1 - bi).le()
+        
+        #Another collision check
         if q.dotp(r)> 0 or (t<0 or t>1):
-            #No colliding holy shit
             self.x += self.vx
             self.y += self.vy
             return
-        """
+        
+        """ #Further line movement collision testing
         if (t<0 or t>1):
             if not (d0<self.R or d1<self.R):
-                #No colliding holy shit
                 self.x += self.vx
                 self.y += self.vy
                 print("b")
@@ -78,28 +84,23 @@ class Ball:
             else:
                 print("a")
         """
+        
         i = be - bi
-        s = i.dotp(n) * n    #lmao my roommate trying to sleep rip  
+        s = i.dotp(n) * n
         u = i-2*s
         bep = u + bi
         nv = u* (1 / u.le())
-        #print(Vector(self.x,self.y))
-        #print(Vector(bep.X() + xblo*80, bep.Y() + yblo*60))
-        #print(bep.X())
         speed = v.le()
-        self.vx = nv.X()*speed
-        self.vy = nv.Y()*speed
+        self.vx = nv.X()*speed*.95 #This slows it down a little
+        self.vy = nv.Y()*speed*.95 #This slows it down a little
         self.x = bep.X() + xblo*80
         self.y = bep.Y() + yblo*60
-        # Update the position using the velocity
-        #self.x += self.vx
-        #self.y += self.vy 
         
         
         
         
         
-        #VVVVVVVVV SHITTY CODE DON"T UNCOMMENT ANY OF THIS VVVVVVV
+        #VVVVVVVVV Old collision CODE DON"T UNCOMMENT ANY OF THIS VVVVVVV
         # Checks for Line interaction   
         #TF LOCAL COORDS
         #NEED FOR LOOP CHECKING FOR MORE THAN JUST ONE INTERACTION

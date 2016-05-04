@@ -8,11 +8,12 @@ class Box:
         pass
     def update(self):
         self.loc += self.vel
-        if self.loc.X() < -100 or self.loc.X() > 900:
+        if self.loc.X() < -100 or self.loc.X() > 950:
+            return True
+        if self.loc.Y() < -100 or self.loc.Y() > 900:
             return True
         
-        #if intersectswithplayer:
-            #return "Lose"
+      
         
     def render(self):
         """ Draw the ball for time t. """
